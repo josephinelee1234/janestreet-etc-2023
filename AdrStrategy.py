@@ -75,7 +75,7 @@ class AdrStrategy:
         
         nxt = []
         for order in self.pending_orders:
-            if order["time"] < time.time() - 2:
+            if order["time"] < time.time() - 1:
                 self.exchange.send_cancel_message(order["id"])
             else:
                 nxt.append(order)
@@ -83,6 +83,9 @@ class AdrStrategy:
 
         valbz_bid, valbz_ask = self.tickers["VALBZ"].get_best_bid_ask()
         vale_bid, vale_ask = self.tickers["VALE"].get_best_bid_ask()
+
+        valbz = (self.cur_quantity["VALBZ"] + self.outstanding_buy["VALBZ"] - self.outstanding_sell["VALBZ"])
+        vale = (self.cur_quantity["VALE"] + self.outstanding_buy["VALE"] - self.outstanding_sell["VALE"])
 
         # Check if we should buy one VALBZ and sell one VALE
         if -self.estimated_price + vale_bid[0] >= self.edge:
@@ -96,8 +99,6 @@ class AdrStrategy:
         
         # Check if we should do stuff with VALBZ to equalize VALE
         else:
-            valbz = (self.cur_quantity["VALBZ"] + self.outstanding_buy["VALBZ"] - self.outstanding_sell["VALBZ"])
-            vale = (self.cur_quantity["VALE"] + self.outstanding_buy["VALE"] - self.outstanding_sell["VALE"])
             more_needed = - vale - valbz
             if more_needed > 0:
                 self.buy("VALBZ", min(more_needed, valbz_ask[1]))
@@ -157,8 +158,8 @@ class AdrStrategy:
         if quantity == 0:
             return
         # print("Executing buy {} sell {} for {}".format(to_buy, to_sell, quantity))
-        self.buy(to_buy, quantity)
-        self.sell(to_sell, quantity)
+        if to_buy == "VALE": self.buy(to_buy, quantity)
+        if to_sell == "VALE": self.sell(to_sell, quantity)
     
     def buy(self, ticker, quantity):
         price = self.tickers[ticker].get_price_to_buy(quantity)
