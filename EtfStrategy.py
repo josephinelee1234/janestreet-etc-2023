@@ -31,11 +31,13 @@ class EtfStrategy:
                 if self.things_added >= 3:
                     self.etf -= self.gs_fair
 
+                
                 gs_bid_price = best_price("buy")
                 gs_ask_price = best_price("sell")
-                self.gs_fair = (gs_ask_price + gs_bid_price)/2
-                self.etf += self.gs_fair
-                self.things_added += 1
+                if gs_ask_price is not None and gs_bid_price is not None:
+                    self.gs_fair = (gs_ask_price + gs_bid_price)/2
+                    self.etf += self.gs_fair
+                    self.things_added += 1
             
             if message["symbol"] == "MS":
 
@@ -48,9 +50,10 @@ class EtfStrategy:
 
                 ms_bid_price = best_price("buy")
                 ms_ask_price = best_price("sell")
-                self.ms_fair = (ms_ask_price + ms_bid_price)/2
-                self.etf += self.ms_fair
-                self.things_added += 1
+                if ms_ask_price is not None and ms_bid_price is not None:
+                    self.ms_fair = (ms_ask_price + ms_bid_price)/2
+                    self.etf += self.ms_fair
+                    self.things_added += 1
             
             if message["symbol"] == "WFC":
                 def best_price(side):
@@ -62,9 +65,10 @@ class EtfStrategy:
 
                 wfc_bid_price = best_price("buy")
                 wfc_ask_price = best_price("sell")
-                self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
-                self.etf += self.wfc_fair
-                self.things_added += 1
+                if wfc_ask_price is not None and wfc_bid_price is not None:
+                    self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
+                    self.etf += self.wfc_fair
+                    self.things_added += 1
 
             if self.things_added >= 3:
                 print("C")
@@ -79,13 +83,13 @@ class EtfStrategy:
                             return message[side][0][0]
                 
                 if self.etf > best_price_etf("sell"):
-                    print("selling etf")
+                    print("self.etf")
                     print(best_price_etf("sell"))
                     self.count += 1
                     self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, self.etf, 1)
                 elif self.etf < best_price_etf("buy"):
                     print(best_price_etf("buy"))
-                    print("buying etf")
+                    print("self.etf")
                     self.count += 1
                     self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  self.etf, 1)
                     
