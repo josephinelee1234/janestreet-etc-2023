@@ -11,6 +11,7 @@ import time
 import socket
 import json
 import BondStrategy
+import etf_strategy
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # Replace "REPLACEME" with your team name!
@@ -52,6 +53,8 @@ def main():
     vale_last_print_time = time.time()
 
     bond_strategy = BondStrategy.BondStrategy(exchange, hello_message)
+    etf_strategy = etf_strategy.EtfStrategy(exchange, hello_message)
+
 
     # Here is the main loop of the program. It will continue to read and
     # process messages in a loop until a "close" message is received. You
@@ -67,12 +70,15 @@ def main():
     # rate-limited and ignored. Please, don't do that!
     while True:
         message = exchange.read_message()
-
-        bond_strategy.handle_message(message)
-
+        
         if message["type"] == "reject":
             print("ERROR: REJECT MESSAGE RECEIVED")
             print(message)
+
+        bond_strategy.handle_message(message)
+        etf_strategy.handle_message(message)
+
+        
 
         # Some of the message types below happen infrequently and contain
         # important information to help you understand what your bot is doing,
