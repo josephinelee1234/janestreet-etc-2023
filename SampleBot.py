@@ -76,7 +76,7 @@ def main():
             print(message)
 
         bond_strategy.handle_message(message)
-        etf_strategy.handle_message(message)
+        # etf_strategy.handle_message(message)
 
         
 
