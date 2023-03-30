@@ -1,7 +1,10 @@
-from SampleBot import ExchangeConnection
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from SampleBot import ExchangeConnection
 
 class BondStrategy:
-    def __init__(self, exchange: ExchangeConnection):
+    def __init__(self, exchange: "ExchangeConnection"):
         self.exchange = exchange
     
     def handle_message(self, message):
