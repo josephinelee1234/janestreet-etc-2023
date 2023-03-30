@@ -84,7 +84,7 @@ class EtfStrategy:
                     
                     print("executing")
 
-                    if self.position < 97:
+                    if self.position < 94:
                         if best_price_etf("buy") is not None and best_price_etf("buy") < self.etf:
                             print("buying")
                             self.position += 3
@@ -94,7 +94,7 @@ class EtfStrategy:
                             self.pending_orders.add(self.count)
 
 
-                    if self.position > -97:
+                    if self.position > -94:
                         if best_price_etf("sell") is not None and best_price_etf("sell") > self.etf:
                             print("selling")
                             self.position -= 3
