@@ -80,9 +80,9 @@ def main():
         # message because it can be a lot of information to read. Instead, let
         # your code handle the messages and just print the information
         # important for you!
-        # if message["type"] == "close":
-        #     print("The round has ended")
-        #     break
+        if message["type"] == "close":
+            print("The round has ended")
+            break
         # elif message["type"] == "error":
         #     print(message)
         # elif message["type"] == "reject":
