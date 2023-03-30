@@ -100,7 +100,7 @@ def main():
             #                 "vale_ask_price": vale_ask_price,
             #             }
             #         )
-            if message["symbol"] = "GS":
+            if message["symbol"] == "GS":
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
@@ -109,6 +109,7 @@ def main():
                 gs_ask_price = best_price("sell")
                 gs_fair = (gs_ask_price + gs_bid_price)/2
                 print(gs_fair)
+                print("HELLO")
 
                 
 
