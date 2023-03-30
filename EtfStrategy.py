@@ -71,8 +71,8 @@ class EtfStrategy:
 
                 self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 3*self.wfc_fair)/10
                 
-                while message["symbol"] != "XLF":
-                    continue
+                # while message["symbol"] != "XLF":
+                #     continue
                 
                 def best_price_etf(side):
                         if message[side]:
@@ -88,5 +88,6 @@ class EtfStrategy:
                     print("buying etf")
                     self.exchange.send_add_message(count, "XLF", SampleBot.Dir.BUY, best_price_etf("buy"), 1)
                     count += 1
+                
     
         
