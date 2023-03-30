@@ -58,7 +58,7 @@ class EtfStrategy:
 
                 wfc_bid_price = best_price("buy")
                 wfc_ask_price = best_price("sell")
-                self.wfc_fair = (gs_ask_price + gs_bid_price)/2
+                self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
                 self.etf += self.wfc_fair
                 self.things_added += 1
 
