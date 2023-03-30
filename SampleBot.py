@@ -10,6 +10,7 @@ from enum import Enum
 import time
 import socket
 import json
+from BondStrategy import BondStrategy
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # Replace "REPLACEME" with your team name!
@@ -50,6 +51,8 @@ def main():
     vale_bid_price, vale_ask_price = None, None
     vale_last_print_time = time.time()
 
+    bond_strategy = BondStrategy(exchange)
+
     # Here is the main loop of the program. It will continue to read and
     # process messages in a loop until a "close" message is received. You
     # should write to code handle more types of messages (and not just print
@@ -64,6 +67,8 @@ def main():
     # rate-limited and ignored. Please, don't do that!
     while True:
         message = exchange.read_message()
+
+        bond_strategy.handle_message(message)
 
         # Some of the message types below happen infrequently and contain
         # important information to help you understand what your bot is doing,
