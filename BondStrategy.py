@@ -59,7 +59,7 @@ class BondStrategy:
     def buy(self, quantity):
         self.exchange.send_add_message(order_id=self.order_id, symbol="BOND", dir=SampleBot.Dir.BUY, price=self.fair_value - self.edge, size=quantity)
         self.outstanding_buy += quantity
-        self.order_info["" + self.order_id] = {
+        self.order_info[str(self.order_id)] = {
             "type": "BUY",
             "amount": quantity
         }
@@ -68,7 +68,7 @@ class BondStrategy:
     def sell(self, quantity):
         self.exchange.send_add_message(order_id=self.order_id, symbol="BOND", dir=SampleBot.Dir.SELL, price=self.fair_value + self.edge, size=quantity)
         self.outstanding_sell += quantity
-        self.order_info["" + self.order_id] = {
+        self.order_info[str(self.order_id)] = {
             "type": "SELL",
             "amount": quantity
         }
