@@ -74,7 +74,7 @@ class EtfStrategy:
             
             self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 2*self.wfc_fair)/10            
             if message["symbol"] == "XLF":
-                print(self.etf)
+                print(self.position)
 
                 if self.things_added >= 3:
                     def best_price_etf(side):
@@ -86,15 +86,17 @@ class EtfStrategy:
                             if best_price_etf("sell") > self.etf:
                                 print("selling")
                                 self.count += 1
-                                self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 10)
                                 self.position += 10
+
+                                self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 10)
                     elif self.position >= -90:
                         if best_price_etf("buy") is not None:
                             if best_price_etf("buy") < self.etf:
                                 print("buying")
                                 self.count += 1
-                                self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 10)
                                 self.position -= 10
+                                self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 10)
+                                
                             
                 
     
