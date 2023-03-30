@@ -10,7 +10,7 @@ from enum import Enum
 import time
 import socket
 import json
-from BondStrategy import BondStrategy
+import BondStrategy
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # Replace "REPLACEME" with your team name!
@@ -43,7 +43,7 @@ def main():
     # Send an order for BOND at a good price, but it is low enough that it is
     # unlikely it will be traded against. Maybe there is a better price to
     # pick? Also, you will need to send more orders over time.
-    exchange.send_add_message(order_id=1, symbol="BOND", dir=Dir.BUY, price=990, size=1)
+    # exchange.send_add_message(order_id=1, symbol="BOND", dir=Dir.BUY, price=990, size=1)
 
     # Set up some variables to track the bid and ask price of a symbol. Right
     # now this doesn't track much information, but it's enough to get a sense
@@ -51,7 +51,7 @@ def main():
     vale_bid_price, vale_ask_price = None, None
     vale_last_print_time = time.time()
 
-    bond_strategy = BondStrategy(exchange)
+    bond_strategy = BondStrategy.BondStrategy(exchange, hello_message)
 
     # Here is the main loop of the program. It will continue to read and
     # process messages in a loop until a "close" message is received. You
@@ -70,41 +70,45 @@ def main():
 
         bond_strategy.handle_message(message)
 
+        if message["type"] == "reject":
+            print("ERROR: REJECT MESSAGE RECEIVED")
+            print(message)
+
         # Some of the message types below happen infrequently and contain
         # important information to help you understand what your bot is doing,
         # so they are printed in full. We recommend not always printing every
         # message because it can be a lot of information to read. Instead, let
         # your code handle the messages and just print the information
         # important for you!
-        if message["type"] == "close":
-            print("The round has ended")
-            break
-        elif message["type"] == "error":
-            print(message)
-        elif message["type"] == "reject":
-            print(message)
-        elif message["type"] == "fill":
-            print(message)
-        elif message["type"] == "book":
-            if message["symbol"] == "VALE":
+        # if message["type"] == "close":
+        #     print("The round has ended")
+        #     break
+        # elif message["type"] == "error":
+        #     print(message)
+        # elif message["type"] == "reject":
+        #     print(message)
+        # elif message["type"] == "fill":
+        #     print(message)
+        # elif message["type"] == "book":
+        #     if message["symbol"] == "VALE":
 
-                def best_price(side):
-                    if message[side]:
-                        return message[side][0][0]
+        #         def best_price(side):
+        #             if message[side]:
+        #                 return message[side][0][0]
 
-                vale_bid_price = best_price("buy")
-                vale_ask_price = best_price("sell")
+        #         vale_bid_price = best_price("buy")
+        #         vale_ask_price = best_price("sell")
 
-                now = time.time()
+        #         now = time.time()
 
-                if now > vale_last_print_time + 1:
-                    vale_last_print_time = now
-                    print(
-                        {
-                            "vale_bid_price": vale_bid_price,
-                            "vale_ask_price": vale_ask_price,
-                        }
-                    )
+        #         if now > vale_last_print_time + 1:
+        #             vale_last_print_time = now
+        #             print(
+        #                 {
+        #                     "vale_bid_price": vale_bid_price,
+        #                     "vale_ask_price": vale_ask_price,
+        #                 }
+        #             )
 
 
 # ~~~~~============== PROVIDED CODE ==============~~~~~
