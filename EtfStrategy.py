@@ -9,6 +9,7 @@ class EtfStrategy:
         self.wfc_fair = 0
         self.etf = 0
         self.things_added = 0
+        self.count = 0
         
     
     def handle_message(self, message):
@@ -20,7 +21,6 @@ class EtfStrategy:
         # important for you!
         if message["type"] == "book" or message["type"] == "BOOK":
             print("A")
-            count = 0
             if message["symbol"] == "GS":
                 print("B")
 
@@ -80,13 +80,12 @@ class EtfStrategy:
                 
                 if self.etf > best_price_etf("sell"):
                     print("selling etf")
-                    count += 1
-
-                    self.exchange.send_add_message(count, "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 1)
+                    self.count += 1
+                    self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 1)
                 elif self.etf < best_price_etf("buy"):
                     print("buying etf")
-                    count += 1
-                    self.exchange.send_add_message(count, "XLF", SampleBot.Dir.BUY, best_price_etf("buy"), 1)
+                    self.count += 1
+                    self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY, best_price_etf("buy"), 1)
                     
                 
     
