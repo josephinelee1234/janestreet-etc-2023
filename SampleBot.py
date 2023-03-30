@@ -53,9 +53,9 @@ def main():
     vale_bid_price, vale_ask_price = None, None
     vale_last_print_time = time.time()
 
-    # bond_strategy = BondStrategy.BondStrategy(exchange, hello_message)
+    bond_strategy = BondStrategy.BondStrategy(exchange, hello_message)
     etf_strategy = EtfStrategy.EtfStrategy(exchange, hello_message)
-    adr_strategy = AdrStrategy.AdrStrategy(exchange, hello_message)
+    # adr_strategy = AdrStrategy.AdrStrategy(exchange, hello_message)
 
 
     # Here is the main loop of the program. It will continue to read and
@@ -77,7 +77,7 @@ def main():
             print("ERROR: REJECT MESSAGE RECEIVED")
             print(message)
 
-        # bond_strategy.handle_message(message)
+        bond_strategy.handle_message(message)
         adr_strategy.handle_message(message)
         # etf_strategy.handle_message(message)
 
