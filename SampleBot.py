@@ -11,7 +11,7 @@ import time
 import socket
 import json
 import BondStrategy
-import etf_strategy
+import EtfStrategy
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # Replace "REPLACEME" with your team name!
@@ -53,7 +53,7 @@ def main():
     vale_last_print_time = time.time()
 
     bond_strategy = BondStrategy.BondStrategy(exchange, hello_message)
-    etf_strategy = etf_strategy.EtfStrategy(exchange, hello_message)
+    etf_strategy = EtfStrategy.EtfStrategy(exchange, hello_message)
 
 
     # Here is the main loop of the program. It will continue to read and
