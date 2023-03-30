@@ -89,6 +89,8 @@ class EtfStrategy:
                             print("buying")
                             self.position += 3
                             self.count += 1
+                            if len(self.pending_orders > 30):
+                                self.exchange.send_cancel_message(self.count - 30)
                             self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 3)
                             print(self.position)
                             self.pending_orders.add(self.count)
@@ -99,6 +101,8 @@ class EtfStrategy:
                             print("selling")
                             self.position -= 3
                             self.count += 1
+                            if len(self.pending_orders > 30):
+                                self.exchange.send_cancel_message(self.count - 30)
                             self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 3)
                             print(self.position)
                             self.pending_orders.add(self.count)
