@@ -102,7 +102,7 @@ class AdrStrategy:
     def convert_if_needed(self):
         if self.is_converting:
             return
-        mx = abs(self.cur_quantity["VALE"])
+        mx = min(abs(self.cur_quantity["VALE"]), abs(self.cur_quantity["VALE"]))
         if mx > 7:
             self.is_converting = True
             dir = "BUY" if self.cur_quantity["VALBZ"] > 0 else "SELL"
