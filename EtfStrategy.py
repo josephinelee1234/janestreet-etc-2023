@@ -30,8 +30,8 @@ class EtfStrategy:
                      if message[side]:
                          return message[side][0][0]
                 
-                if self.things_added >= 3:
-                    self.etf -= self.gs_fair
+                # if self.things_added >= 3:
+                    # self.etf -= self.gs_fair
 
                 
                 gs_bid_price = best_price("buy")
@@ -39,7 +39,7 @@ class EtfStrategy:
                 
                 if gs_ask_price is not None and gs_bid_price is not None:
                     self.gs_fair = (gs_ask_price + gs_bid_price)/2
-                    self.etf += self.gs_fair
+                    # self.etf += self.gs_fair
                     self.things_added += 1
                 
                 print("gs")
@@ -51,15 +51,15 @@ class EtfStrategy:
                      if message[side]:
                          return message[side][0][0]
                 
-                if self.things_added >= 3:
-                    self.etf -= self.ms_fair
+                # if self.things_added >= 3:
+                #     self.etf -= self.ms_fair
 
                 ms_bid_price = best_price("buy")
                 ms_ask_price = best_price("sell")
                 
                 if ms_ask_price is not None and ms_bid_price is not None:
                     self.ms_fair = (ms_ask_price + ms_bid_price)/2
-                    self.etf += self.ms_fair
+                    # self.etf += self.ms_fair
                     self.things_added += 1
                 
                 print("ms")
@@ -70,25 +70,24 @@ class EtfStrategy:
                      if message[side]:
                          return message[side][0][0]
                 
-                if self.things_added >= 3:
-                    self.etf -= self.gs_fair
+                # if self.things_added >= 3:
+                #     self.etf -= self.gs_fair
 
                 wfc_bid_price = best_price("buy")
                 wfc_ask_price = best_price("sell")
                 if wfc_ask_price is not None and wfc_bid_price is not None:
                     self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
-                    self.etf += self.wfc_fair
+                    # self.etf += self.wfc_fair
                     self.things_added += 1
                 
                 print("ms")
                 print(self.etf)
             
+            self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 3*self.wfc_fair)/10            
+            
             if message["symbol"] == "XFL":
                 if self.things_added >= 3:
                     print("C")
-
-                    self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 3*self.wfc_fair)/10
-                    
                     def best_price_etf(side):
                             if message[side]:
                                 return message[side][0][0]
