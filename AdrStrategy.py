@@ -109,7 +109,7 @@ class AdrStrategy:
             self.exchange.send_convert_message(
                 self.order_id,
                 "VALE",
-                "BUY",
+                dir,
                 mx
             )
             self.order_info[self.order_id] = {
