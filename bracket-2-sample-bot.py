@@ -81,6 +81,7 @@ def main():
         elif message["type"] == "fill":
             print(message)
         elif message["type"] == "book" or message["type"] == "BOOK":
+            print("HELLO")
             # if message["symbol"] == "VALE":
 
             #     def best_price(side):
