@@ -18,10 +18,12 @@ class EtfStrategy:
         # message because it can be a lot of information to read. Instead, let
         # your code handle the messages and just print the information
         # important for you!
-        print("Hello!")
         if message["type"] == "book" or message["type"] == "BOOK":
+            print("A")
             count = 0
             if message["symbol"] == "GS":
+                print("B")
+
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
@@ -36,6 +38,7 @@ class EtfStrategy:
                 self.things_added += 1
             
             if message["symbol"] == "MS":
+
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
@@ -64,6 +67,8 @@ class EtfStrategy:
                 self.things_added += 1
 
             if self.things_added >= 3:
+                print("C")
+
                 self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 3*self.wfc_fair)/10
                 
                 while message["symbol"] != "XLF":
@@ -74,6 +79,8 @@ class EtfStrategy:
                             return message[side][0][0]
                 
                 if self.etf > best_price_etf("sell"):
+                    print("D")
+
                     print("selling etf")
                     self.exchange.send_add_message(count, "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 1)
                     count += 1
