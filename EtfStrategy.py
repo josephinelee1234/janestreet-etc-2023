@@ -77,7 +77,7 @@ class EtfStrategy:
                         if message[side]:
                             return message[side][0][0]    
                 
-                    if len(self.pending_order) != 0:
+                    if len(self.pending_orders) != 0:
                         return
                     
                     print("executing")
