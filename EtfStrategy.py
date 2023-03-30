@@ -18,6 +18,7 @@ class EtfStrategy:
         # message because it can be a lot of information to read. Instead, let
         # your code handle the messages and just print the information
         # important for you!
+        print("Hello!")
         if message["type"] == "book" or message["type"] == "BOOK":
             count = 0
             if message["symbol"] == "GS":
