@@ -20,6 +20,7 @@ class EtfStrategy:
         # message because it can be a lot of information to read. Instead, let
         # your code handle the messages and just print the information
         # important for you!
+        
         if message["type"] == "book" or message["type"] == "BOOK":
             print("A")
             if message["symbol"] == "GS":
@@ -81,31 +82,25 @@ class EtfStrategy:
                 
                 print("ms")
                 print(self.etf)
+            
+            if message["symbol"] == "XFL":
+                if self.things_added >= 3:
+                    print("C")
 
-            if self.things_added >= 3:
-                print("C")
-
-                self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 3*self.wfc_fair)/10
-                
-                # while message["symbol"] != "XLF":
-                #     continue
-                
-                def best_price_etf(side):
-                        if message[side]:
-                            return message[side][0][0]
-                if best_price_etf("sell") is not None:
-                    if self.etf > best_price_etf("sell"):
-                        print("self.etf")
-                        print(best_price_etf("sell"))
-                        self.count += 1
-                        self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, self.etf, 1)
-                elif best_price_etf("buy") is not None:
-                    if self.etf < best_price_etf("buy"):
-                        print(best_price_etf("buy"))
-                        print("self.etf")
-                        self.count += 1
-                        self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  self.etf, 1)
-                        
+                    self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 3*self.wfc_fair)/10
+                    
+                    def best_price_etf(side):
+                            if message[side]:
+                                return message[side][0][0]
+                    if best_price_etf("sell") is not None:
+                        if best_price_etf("sell") > self.etf:
+                            self.count += 1
+                            self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 10)
+                    elif best_price_etf("buy") is not None:
+                        if best_price_etf("buy") < self.etf:
+                            self.count += 1
+                            self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 10)
+                            
                 
     
         
