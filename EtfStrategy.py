@@ -34,10 +34,14 @@ class EtfStrategy:
                 
                 gs_bid_price = best_price("buy")
                 gs_ask_price = best_price("sell")
+                
                 if gs_ask_price is not None and gs_bid_price is not None:
                     self.gs_fair = (gs_ask_price + gs_bid_price)/2
                     self.etf += self.gs_fair
                     self.things_added += 1
+                
+                print("gs")
+                print(self.etf)
             
             if message["symbol"] == "MS":
 
@@ -50,10 +54,14 @@ class EtfStrategy:
 
                 ms_bid_price = best_price("buy")
                 ms_ask_price = best_price("sell")
+                
                 if ms_ask_price is not None and ms_bid_price is not None:
                     self.ms_fair = (ms_ask_price + ms_bid_price)/2
                     self.etf += self.ms_fair
                     self.things_added += 1
+                
+                print("ms")
+                print(self.etf)
             
             if message["symbol"] == "WFC":
                 def best_price(side):
@@ -69,6 +77,9 @@ class EtfStrategy:
                     self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
                     self.etf += self.wfc_fair
                     self.things_added += 1
+                
+                print("ms")
+                print(self.etf)
 
             if self.things_added >= 3:
                 print("C")
