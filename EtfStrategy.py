@@ -13,6 +13,12 @@ class EtfStrategy:
         self.count = 0
         self.position = 0
         
+        assert(hello_message["type"] == "hello")
+        for symbol in hello_message["symbols"]:
+            if symbol["symbol"] == "XLF":
+                self.position = symbol["position"]
+
+        
     
     def handle_message(self, message):
         # Some of the message types below happen infrequently and contain
