@@ -13,6 +13,7 @@ class EtfStrategy:
         
     
     def handle_message(self, message):
+        print("hello")
         # Some of the message types below happen infrequently and contain
         # important information to help you understand what your bot is doing,
         # so they are printed in full. We recommend not always printing every
