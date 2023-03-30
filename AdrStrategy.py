@@ -75,7 +75,7 @@ class AdrStrategy:
         
         nxt = []
         for order in self.pending_orders:
-            if order["time"] < time.time() - 5:
+            if order["time"] < time.time() - 2:
                 self.exchange.send_cancel_message(order["id"])
             else:
                 nxt.append(order)
