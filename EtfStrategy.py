@@ -28,6 +28,8 @@ class EtfStrategy:
         # message because it can be a lot of information to read. Instead, let
         # your code handle the messages and just print the information
         # important for you!
+        if message["type"] == "reject" or message["type"] == "ack":
+            self.pending_orders.remove(message["order_id"])
         
         if message["type"] == "book" or message["type"] == "BOOK":
             if message["symbol"] == "GS":
