@@ -33,7 +33,6 @@ class EtfStrategy:
         
         if message["type"] == "book" or message["type"] == "BOOK":
             if message["symbol"] == "GS":
-
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
@@ -42,10 +41,13 @@ class EtfStrategy:
                 gs_ask_price = best_price("sell")
                 
                 if gs_ask_price is not None and gs_bid_price is not None:
+                    if (gs_ask_price + gs_bid_price)/2 < self.gs_fair/2:
+                        self.wfc_fair *= 0.75
+                        self.ms_fair *= 0.75
                     self.gs_fair = (gs_ask_price + gs_bid_price)/2
                     self.things_added += 1
             
-            if message["symbol"] == "MS":
+            elif message["symbol"] == "MS":
 
                 def best_price(side):
                      if message[side]:
@@ -56,10 +58,13 @@ class EtfStrategy:
                 ms_ask_price = best_price("sell")
                 
                 if ms_ask_price is not None and ms_bid_price is not None:
+                    if (gs_ask_price + gs_bid_price)/2 < self.gs_fair/2:
+                        self.wfc_fair *= 0.75
+                        self.ms_fair *= 0.75
                     self.ms_fair = (ms_ask_price + ms_bid_price)/2
                     self.things_added += 1
             
-            if message["symbol"] == "WFC":
+            elif message["symbol"] == "WFC":
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
@@ -68,6 +73,9 @@ class EtfStrategy:
                 wfc_bid_price = best_price("buy")
                 wfc_ask_price = best_price("sell")
                 if wfc_ask_price is not None and wfc_bid_price is not None:
+                    if (gs_ask_price + gs_bid_price)/2 < self.gs_fair/2:
+                        self.wfc_fair *= 0.75
+                        self.ms_fair *= 0.75
                     self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
                     self.things_added += 1
             
@@ -106,13 +114,6 @@ class EtfStrategy:
                             self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 3)
                             print(self.position)
                             self.pending_orders.add(self.count)
-                    
-                    # while self.position >= 97:
-                    #     self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY, best_price_etf("buy"), 3)
-                    #     self.position -= 3
-                    # while self.position <= -97:
-                    #     self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY, best_price_etf("sell"), 3)
-                    #     self.position += 3
 
                 
     
