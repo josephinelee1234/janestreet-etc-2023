@@ -75,9 +75,6 @@ class EtfStrategy:
                     def best_price_etf(side):
                         if message[side]:
                             return message[side][0][0]    
-                    # def best_price_size(side):
-                    #     if message[side]:
-                    #         return math.ceil(message[side][0][1]/2)
                             
                     if self.position <= 97:
                         if best_price_etf("buy") is not None and best_price_etf("buy") < self.etf:
