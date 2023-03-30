@@ -74,7 +74,7 @@ class EtfStrategy:
                             print("buying")
                             self.position += 1
                             self.count += 1
-                            self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 2)
+                            self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 3)
                             print(self.position)
 
                     if self.position >= -90:
@@ -82,7 +82,7 @@ class EtfStrategy:
                             print("selling")
                             self.position -= 1
                             self.count += 1
-                            self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 2)
+                            self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 3)
                             print(self.position)
                 
     
