@@ -12,6 +12,7 @@ class EtfStrategy:
         self.things_added = 0
         self.count = 0
         self.position = 0
+        self.pending_orders = set()
         
         assert(hello_message["type"] == "hello")
         for symbol in hello_message["symbols"]:
@@ -76,22 +77,29 @@ class EtfStrategy:
                         if message[side]:
                             return message[side][0][0]    
                 
+                    if len(self.pending_order) != 0:
+                        return
+                    
                     print("executing")
-                    if self.position < 94:
+
+                    if self.position < 97:
                         if best_price_etf("buy") is not None and best_price_etf("buy") < self.etf:
                             print("buying")
                             self.position += 3
                             self.count += 1
                             self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 3)
                             print(self.position)
+                            self.pending_orders.add(self.count)
 
-                    if self.position > -94:
+
+                    if self.position > -97:
                         if best_price_etf("sell") is not None and best_price_etf("sell") > self.etf:
                             print("selling")
                             self.position -= 3
                             self.count += 1
                             self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 3)
                             print(self.position)
+                            self.pending_orders.add(self.count)
                     
                     # while self.position >= 97:
                     #     self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY, best_price_etf("buy"), 3)
