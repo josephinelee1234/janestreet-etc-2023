@@ -29,3 +29,10 @@ class TickerTracker:
         assert(self.ready())
         assert(self.last_book["buy"][0][1] >= quantity)
         return self.last_book["buy"][0][0]
+
+    def get_estimated_price(self):
+        assert(self.ready())
+        if self.last_book["sell"][0][0] - self.last_book["buy"][0][0] > 5:
+            print("?? volatile")
+            return -1
+        return (self.last_book["buy"][0][0] + self.last_book["sell"][0][0]) / 2
