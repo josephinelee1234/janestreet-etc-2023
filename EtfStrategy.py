@@ -79,7 +79,7 @@ class EtfStrategy:
                     def best_price_etf(side):
                             if message[side]:
                                 return message[side][0][0]
-                    print("here")
+                    print(message.get("size"))
                     if message.get("size") is not None and message.get("size") <= 90:
                         if best_price_etf("sell") is not None:
                             if best_price_etf("sell") > self.etf:
