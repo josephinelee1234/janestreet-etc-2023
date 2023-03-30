@@ -94,8 +94,15 @@ class AdrStrategy:
             # Do it!
             self.execute("VALE", "VALBZ", min(vale_ask[1], valbz_bid[1]))
         
-        # else:
-        #     quantity = min(quantity, self.limit - (self.cur_quantity[to_buy] + self.outstanding_buy[to_buy] - self.outstanding_sell[to_buy]))
+        # Check if we should do stuff with VALBZ to equalize VALE
+        else:
+            valbz = (self.cur_quantity["VALBZ"] + self.outstanding_buy["VALBZ"] - self.outstanding_sell["VALBZ"])
+            vale = (self.cur_quantity["VALE"] + self.outstanding_buy["VALE"] - self.outstanding_sell["VALE"])
+            more_needed = - vale - valbz
+            if more_needed > 0:
+                self.buy("VALBZ", min(more_needed, valbz_ask[1]))
+            elif more_needed < 0:
+                self.sell("VALBZ", min(-more_needed, valbz_bid[1]))
         
     
     def process_order(self, order_info, quantity, success):
