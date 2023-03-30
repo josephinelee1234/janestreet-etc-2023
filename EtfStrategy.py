@@ -13,7 +13,6 @@ class EtfStrategy:
         
     
     def handle_message(self, message):
-        print("hello")
         # Some of the message types below happen infrequently and contain
         # important information to help you understand what your bot is doing,
         # so they are printed in full. We recommend not always printing every
@@ -22,9 +21,7 @@ class EtfStrategy:
         # important for you!
         
         if message["type"] == "book" or message["type"] == "BOOK":
-            print("A")
             if message["symbol"] == "GS":
-                print("B")
 
                 def best_price(side):
                      if message[side]:
@@ -41,9 +38,6 @@ class EtfStrategy:
                     self.gs_fair = (gs_ask_price + gs_bid_price)/2
                     # self.etf += self.gs_fair
                     self.things_added += 1
-                
-                print("gs")
-                print(self.etf)
             
             if message["symbol"] == "MS":
 
@@ -61,9 +55,6 @@ class EtfStrategy:
                     self.ms_fair = (ms_ask_price + ms_bid_price)/2
                     # self.etf += self.ms_fair
                     self.things_added += 1
-                
-                print("ms")
-                print(self.etf)
             
             if message["symbol"] == "WFC":
                 def best_price(side):
@@ -79,15 +70,11 @@ class EtfStrategy:
                     self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
                     # self.etf += self.wfc_fair
                     self.things_added += 1
-                
-                print("ms")
-                print(self.etf)
             
             self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 2*self.wfc_fair)/10            
             
             if message["symbol"] == "XLF":
                 if self.things_added >= 3:
-                    print("C")
                     def best_price_etf(side):
                             if message[side]:
                                 return message[side][0][0]
