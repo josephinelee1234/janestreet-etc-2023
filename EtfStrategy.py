@@ -83,19 +83,20 @@ class EtfStrategy:
                     print(message.get("size"))
                     if self.position <= 90:
                         if best_price_etf("sell") is not None:
-                            if best_price_etf("sell") > self.etf:
+                            if (best_price_etf("sell") - self.etf) :
                                 print("selling")
-                                self.count += 1
-                                self.position += 10
+                                self.count += 2
+                                self.position += 0
 
                                 self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.SELL, best_price_etf("sell"), 10)
-                    elif self.position >= -90:
-                        if best_price_etf("buy") is not None:
-                            if best_price_etf("buy") < self.etf:
-                                print("buying")
-                                self.count += 1
-                                self.position -= 10
                                 self.exchange.send_add_message(self.count , "XLF", SampleBot.Dir.BUY,  best_price_etf("buy"), 10)
+                                
+                    # elif self.position >= -90:
+                    #     if best_price_etf("buy") is not None:
+                    #         if best_price_etf("buy") < self.etf:
+                    #             print("buying")
+                    #             self.count += 1
+                    #             self.position -= 10
                                 
                             
                 
