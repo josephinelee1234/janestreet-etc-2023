@@ -73,7 +73,7 @@ class EtfStrategy:
                 wfc_bid_price = best_price("buy")
                 wfc_ask_price = best_price("sell")
                 if wfc_ask_price is not None and wfc_bid_price is not None:
-                    if (gs_ask_price + gs_bid_price)/2 < self.gs_fair/2:
+                    if (wfc_ask_price + wfc_bid_price)/2 < self.wfc_fair/2:
                         self.ms_fair *= 0.75
                         self.gs_fair *= 0.75
                     self.wfc_fair = (wfc_ask_price + wfc_bid_price)/2
