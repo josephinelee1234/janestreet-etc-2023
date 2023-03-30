@@ -12,6 +12,7 @@ import socket
 import json
 import BondStrategy
 import EtfStrategy
+import AdrStrategy
 
 # ~~~~~============== CONFIGURATION  ==============~~~~~
 # Replace "REPLACEME" with your team name!
@@ -54,6 +55,7 @@ def main():
 
     bond_strategy = BondStrategy.BondStrategy(exchange, hello_message)
     etf_strategy = EtfStrategy.EtfStrategy(exchange, hello_message)
+    adr_strategy = AdrStrategy.AdrStrategy(exchange, hello_message)
 
 
     # Here is the main loop of the program. It will continue to read and
@@ -77,6 +79,7 @@ def main():
 
         bond_strategy.handle_message(message)
         etf_strategy.handle_message(message)
+        adr_strategy.handle_message(message)
 
         
 
