@@ -85,7 +85,7 @@ class EtfStrategy:
             
             self.etf = (3000 + 2*self.gs_fair + 3*self.ms_fair + 3*self.wfc_fair)/10            
             
-            if message["symbol"] == "XFL":
+            if message["symbol"] == "XLF":
                 if self.things_added >= 3:
                     print("C")
                     def best_price_etf(side):
