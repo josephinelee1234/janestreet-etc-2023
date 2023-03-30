@@ -80,7 +80,7 @@ def main():
             print(message)
         elif message["type"] == "fill":
             print(message)
-        elif message["type"] == "book":
+        elif message["type"] == "book" or message["type"] == "BOOK":
             # if message["symbol"] == "VALE":
 
             #     def best_price(side):
