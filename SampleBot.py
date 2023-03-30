@@ -53,7 +53,7 @@ def main():
     vale_last_print_time = time.time()
 
     bond_strategy = BondStrategy.BondStrategy(exchange, hello_message)
-    etf_strategy = EtfStrategy.EtfStrategy(exchange, hello_message)
+    # etf_strategy = EtfStrategy.EtfStrategy(exchange, hello_message)
 
 
     # Here is the main loop of the program. It will continue to read and
@@ -76,7 +76,7 @@ def main():
             print(message)
 
         bond_strategy.handle_message(message)
-        etf_strategy.handle_message(message)
+        # etf_strategy.handle_message(message)
 
         
 
