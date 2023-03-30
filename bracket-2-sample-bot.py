@@ -62,6 +62,13 @@ def main():
     # message. Sending a message in response to every exchange message will
     # cause a feedback loop where your bot's messages will quickly be
     # rate-limited and ignored. Please, don't do that!
+   
+    gs_fair = 0
+    ms_fair = 0
+    wfc_fair = 0
+    etf = 0
+    things_added = 0
+
     while True:
         message = exchange.read_message()
 
@@ -101,52 +108,66 @@ def main():
             #                 "vale_ask_price": vale_ask_price,
             #             }
             #         )
-            gs_fair = 0
-            ms_fair = 0
-            wfc_fair = 0
+            
             
             if message["symbol"] == "GS":
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
                 
+                if things_added >= 3:
+                    etf -= gs_fair
+
                 gs_bid_price = best_price("buy")
                 gs_ask_price = best_price("sell")
                 gs_fair = (gs_ask_price + gs_bid_price)/2
+                etf += gs_fair
+                things_added += 1
             
             if message["symbol"] == "MS":
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
                 
+                if things_added >= 3:
+                    etf -= ms_fair
+
                 ms_bid_price = best_price("buy")
                 ms_ask_price = best_price("sell")
-                ms_fair = (gs_ask_price + gs_bid_price)/2
+                ms_fair = (ms_ask_price + ms_bid_price)/2
+                etf += ms_fair
+                things_added += 1
             
             if message["symbol"] == "WFC":
                 def best_price(side):
                      if message[side]:
                          return message[side][0][0]
                 
+                if things_added >= 3:
+                    etf -= gs_fair
+
                 wfc_bid_price = best_price("buy")
                 wfc_ask_price = best_price("sell")
                 wfc_fair = (gs_ask_price + gs_bid_price)/2
+                etf += wfc_fair
+                things_added += 1
 
-            etf = (3000 + 2*gs_fair + 3*ms_fair + 3*wfc_fair)/10
-            
-            while message["symbol"] != "XLF":
-                continue
-            
-            def best_price_etf(side):
-                     if message[side]:
-                         return message[side][0][0]
-            
-            if etf > best_price_etf("sell"):
-                exchange.send_add_message(count, "XLF", Dir.SELL, best_price_etf("sell"), 1)
-                count += 1
-            elif etf < best_price_etf("buy"):
-                exchange.send_add_message(count, "XLF", Dir.BUY, best_price_etf("buy"), 1)
-                count += 1
+            if things_added >= 3:
+                etf = (3000 + 2*gs_fair + 3*ms_fair + 3*wfc_fair)/10
+                
+                while message["symbol"] != "XLF":
+                    continue
+                
+                def best_price_etf(side):
+                        if message[side]:
+                            return message[side][0][0]
+                
+                if etf > best_price_etf("sell"):
+                    exchange.send_add_message(count, "XLF", Dir.SELL, best_price_etf("sell"), 1)
+                    count += 1
+                elif etf < best_price_etf("buy"):
+                    exchange.send_add_message(count, "XLF", Dir.BUY, best_price_etf("buy"), 1)
+                    count += 1
 
                 
 
